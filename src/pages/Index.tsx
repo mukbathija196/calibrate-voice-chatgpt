@@ -12,6 +12,16 @@ const suggestionChips = [
 
 const Index = () => {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) navigate("/auth");
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) navigate("/auth");
+    });
+  }, [navigate]);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
