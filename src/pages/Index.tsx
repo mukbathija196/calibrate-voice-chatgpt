@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine } from "lucide-react";
 
 const suggestionChips = [
