@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        chip: {
+          green: "hsl(var(--chip-green))",
+          blue: "hsl(var(--chip-blue))",
+          orange: "hsl(var(--chip-orange))",
+          yellow: "hsl(var(--chip-yellow))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
