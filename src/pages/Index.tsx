@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine } from "lucide-react";
 
 const suggestionChips = [
@@ -10,6 +12,16 @@ const suggestionChips = [
 
 const Index = () => {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) navigate("/auth");
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) navigate("/auth");
+    });
+  }, [navigate]);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
