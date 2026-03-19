@@ -8,8 +8,8 @@ const suggestionChips = [
   { icon: BarChart3, label: "Analyze data", color: "text-chip-blue" },
   { icon: FileText, label: "Summarize text", color: "text-chip-orange" },
   { icon: Lightbulb, label: "Brainstorm", color: "text-chip-yellow" },
-  { icon: Mic, label: "Ask by voice, not by keyboard", color: "text-muted-foreground" },
-  { icon: AudioLines, label: "Learn better through conversations", color: "text-muted-foreground" },
+  { icon: Mic, label: "Ask by voice, not by keyboard", color: "text-chip-purple" },
+  { icon: AudioLines, label: "Learn better through conversations", color: "text-chip-pink" },
 ];
 
 const Index = () => {

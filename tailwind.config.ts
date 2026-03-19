@@ -52,6 +52,8 @@ export default {
           blue: "hsl(var(--chip-blue))",
           orange: "hsl(var(--chip-orange))",
           yellow: "hsl(var(--chip-yellow))",
+          purple: "hsl(var(--chip-purple))",
+          pink: "hsl(var(--chip-pink))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
