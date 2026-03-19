@@ -42,6 +42,8 @@ All colors MUST be HSL.
     --chip-blue: 210 70% 55%;
     --chip-orange: 25 85% 55%;
     --chip-yellow: 45 90% 50%;
+    --chip-purple: 270 70% 60%;
+    --chip-pink: 340 75% 55%;
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 92%;
