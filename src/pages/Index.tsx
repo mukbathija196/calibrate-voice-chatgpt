@@ -57,7 +57,7 @@ const Index = () => {
               key={chip.label}
               className="flex items-center gap-3 px-4 py-3 rounded-2xl border border-border bg-background hover:bg-secondary transition-colors"
             >
-              <chip.icon className={`w-5 h-5 ${chip.color}`} />
+              <chip.icon className={`w-5 h-5 shrink-0 ${chip.color}`} />
               <span className="text-sm text-secondary-foreground">{chip.label}</span>
             </button>
           ))}
