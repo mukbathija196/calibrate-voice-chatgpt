@@ -65,6 +65,9 @@ const Index = () => {
           {suggestionChips.map((chip) => (
             <button
               key={chip.label}
+              onClick={() => {
+                if (chip.label === "Ask by voice, not by keyboard") setVoiceActive(true);
+              }}
               className="flex items-center gap-3 px-4 py-3 rounded-2xl border border-border bg-background hover:bg-secondary transition-colors"
             >
               <chip.icon className={`w-5 h-5 shrink-0 ${chip.color}`} />
