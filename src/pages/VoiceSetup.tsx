@@ -112,6 +112,33 @@ const VoiceSetup = () => {
     };
   }, []);
 
+  const skipDialog = (
+    <AlertDialog open={showSkipDialog} onOpenChange={setShowSkipDialog}>
+      <AlertDialogContent className="max-w-xs rounded-2xl">
+        <AlertDialogDescription className="text-center text-sm text-foreground pt-2">
+          You can calibrate your voice anytime from settings
+        </AlertDialogDescription>
+        <AlertDialogFooter className="sm:justify-center">
+          <AlertDialogAction
+            onClick={() => navigate("/")}
+            className="rounded-xl"
+          >
+            OK
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+
+  const skipButton = (
+    <button
+      onClick={() => setShowSkipDialog(true)}
+      className="absolute top-4 right-4 text-sm text-muted-foreground hover:text-foreground transition-colors z-10"
+    >
+      Skip
+    </button>
+  );
+
   if (adapting) {
     return (
       <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-4">
