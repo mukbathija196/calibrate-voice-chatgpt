@@ -2,6 +2,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mic, Check, ArrowRight, ChevronDown } from "lucide-react";
 import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -45,6 +52,7 @@ const VoiceSetup = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [localStatus, setLocalStatus] = useState<PhaseStatus>("pending");
   const [adapting, setAdapting] = useState(false);
+  const [showSkipDialog, setShowSkipDialog] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const RECORD_DURATION = 5000;
@@ -104,6 +112,33 @@ const VoiceSetup = () => {
     };
   }, []);
 
+  const skipDialog = (
+    <AlertDialog open={showSkipDialog} onOpenChange={setShowSkipDialog}>
+      <AlertDialogContent className="max-w-xs rounded-2xl">
+        <AlertDialogDescription className="text-center text-sm text-foreground pt-2">
+          You can calibrate your voice anytime from settings
+        </AlertDialogDescription>
+        <AlertDialogFooter className="sm:justify-center">
+          <AlertDialogAction
+            onClick={() => navigate("/")}
+            className="rounded-xl"
+          >
+            OK
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+
+  const skipButton = (
+    <button
+      onClick={() => setShowSkipDialog(true)}
+      className="absolute top-4 right-4 text-sm text-muted-foreground hover:text-foreground transition-colors z-10"
+    >
+      Skip
+    </button>
+  );
+
   if (adapting) {
     return (
       <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-4">
@@ -117,7 +152,9 @@ const VoiceSetup = () => {
   // Ask local language screen
   if (flowPhase === "ask-local") {
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="flex gap-2 mb-2">
           {ENGLISH_PHRASES.map((_, i) => (
             <div key={i} className="w-2.5 h-2.5 rounded-full bg-chip-green" />
@@ -151,7 +188,9 @@ const VoiceSetup = () => {
   // Choose language screen
   if (flowPhase === "choose-language") {
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="text-center space-y-2">
           <h2 className="text-xl font-semibold">Choose your language</h2>
           <p className="text-sm text-muted-foreground max-w-xs">
@@ -187,7 +226,9 @@ const VoiceSetup = () => {
   if (flowPhase === "local-record") {
     const lang = LOCAL_LANGUAGE_PHRASES[selectedLanguage];
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-semibold">{lang.label} Calibration</h1>
           <p className="text-sm text-muted-foreground max-w-xs">
@@ -239,7 +280,9 @@ const VoiceSetup = () => {
 
   // English recording screen (default)
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="relative flex flex-col min-h-screen bg-background text-foreground">
+      {skipButton}
+      {skipDialog}
       <div className="flex-1 flex flex-col items-center justify-center px-6 gap-6">
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-semibold">Voice Setup</h1>
