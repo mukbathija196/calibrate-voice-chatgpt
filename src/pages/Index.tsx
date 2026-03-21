@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine } from "lucide-react";
+import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp } from "lucide-react";
 
 const suggestionChips = [
   { icon: Image, label: "Create image", color: "text-chip-green" },
