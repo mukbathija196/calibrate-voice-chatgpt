@@ -152,7 +152,9 @@ const VoiceSetup = () => {
   // Ask local language screen
   if (flowPhase === "ask-local") {
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="flex gap-2 mb-2">
           {ENGLISH_PHRASES.map((_, i) => (
             <div key={i} className="w-2.5 h-2.5 rounded-full bg-chip-green" />
