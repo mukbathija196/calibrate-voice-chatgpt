@@ -188,7 +188,9 @@ const VoiceSetup = () => {
   // Choose language screen
   if (flowPhase === "choose-language") {
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="text-center space-y-2">
           <h2 className="text-xl font-semibold">Choose your language</h2>
           <p className="text-sm text-muted-foreground max-w-xs">
