@@ -52,6 +52,7 @@ const VoiceSetup = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [localStatus, setLocalStatus] = useState<PhaseStatus>("pending");
   const [adapting, setAdapting] = useState(false);
+  const [showSkipDialog, setShowSkipDialog] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const RECORD_DURATION = 5000;
