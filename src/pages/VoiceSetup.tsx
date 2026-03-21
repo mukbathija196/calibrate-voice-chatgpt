@@ -280,7 +280,9 @@ const VoiceSetup = () => {
 
   // English recording screen (default)
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="relative flex flex-col min-h-screen bg-background text-foreground">
+      {skipButton}
+      {skipDialog}
       <div className="flex-1 flex flex-col items-center justify-center px-6 gap-6">
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-semibold">Voice Setup</h1>
