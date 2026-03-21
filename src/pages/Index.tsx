@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp } from "lucide-react";
+import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp, MoreVertical, Minus } from "lucide-react";
 
 const suggestionChips = [
   { icon: Image, label: "Create image", color: "text-chip-green" },
@@ -15,6 +15,7 @@ const suggestionChips = [
 const Index = () => {
   const [query, setQuery] = useState("");
   const [voiceActive, setVoiceActive] = useState(false);
+  const [conversationMode, setConversationMode] = useState(false);
   const [waveHeights, setWaveHeights] = useState<number[]>([]);
   const navigate = useNavigate();
 
@@ -34,6 +35,63 @@ const Index = () => {
       if (!session) navigate("/auth");
     });
   }, [navigate]);
+
+  if (conversationMode) {
+    return (
+      <div className="flex flex-col min-h-screen bg-black text-white">
+        {/* Top bar */}
+        <header className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setConversationMode(false)}
+              className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center"
+            >
+              <Minus className="w-5 h-5 text-zinc-400" />
+            </button>
+            <span className="text-base font-semibold text-white">ChatGPT</span>
+            <span className="text-base text-zinc-400">Voice</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-green-500 absolute top-3 right-14" />
+            <button className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center">
+              <MoreVertical className="w-5 h-5 text-zinc-400" />
+            </button>
+          </div>
+        </header>
+
+        {/* Center */}
+        <main className="flex-1 flex items-center justify-center">
+          <h1 className="text-3xl font-light text-zinc-400">Start talking</h1>
+        </main>
+
+        {/* Bottom bar */}
+        <footer className="px-4 pb-6 pt-3">
+          <div className="flex items-center gap-3">
+            <button className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
+              <Plus className="w-5 h-5 text-zinc-400" />
+            </button>
+            <div className="flex-1 bg-zinc-800 rounded-full px-4 py-3">
+              <input
+                type="text"
+                placeholder="Type"
+                className="w-full bg-transparent text-white placeholder:text-zinc-500 outline-none text-base"
+              />
+            </div>
+            <button className="w-12 h-12 rounded-full bg-zinc-700 flex items-center justify-center">
+              <Mic className="w-5 h-5 text-zinc-300" />
+            </button>
+            <button
+              onClick={() => setConversationMode(false)}
+              className="flex items-center gap-2 px-5 py-3 rounded-full bg-blue-600"
+            >
+              <AudioLines className="w-5 h-5 text-white" />
+              <span className="text-white font-medium">End</span>
+            </button>
+          </div>
+        </footer>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -67,6 +125,7 @@ const Index = () => {
               key={chip.label}
               onClick={() => {
                 if (chip.label === "Ask by voice, not by keyboard") setVoiceActive(true);
+                if (chip.label === "Learn better through conversations") setConversationMode(true);
               }}
               className="flex items-center gap-3 px-4 py-3 rounded-2xl border border-border bg-background hover:bg-secondary transition-colors"
             >
@@ -81,7 +140,6 @@ const Index = () => {
       <footer className="px-4 pb-6 pt-3">
         {voiceActive ? (
           <div className="space-y-2">
-            {/* Expanded voice card */}
             <div className="bg-secondary rounded-3xl px-5 pt-6 pb-4 flex flex-col items-end gap-4">
               <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 See text
@@ -96,7 +154,6 @@ const Index = () => {
                 ))}
               </div>
             </div>
-            {/* Controls row */}
             <div className="flex items-center justify-between">
               <button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
                 <Plus className="w-5 h-5 text-muted-foreground" />
@@ -132,7 +189,7 @@ const Index = () => {
               <Mic className="w-5 h-5 text-muted-foreground" />
             </button>
             <button
-              onClick={() => setVoiceActive(true)}
+              onClick={() => setConversationMode(true)}
               className="w-9 h-9 rounded-full bg-foreground flex items-center justify-center"
             >
               <AudioLines className="w-5 h-5 text-primary-foreground" />
