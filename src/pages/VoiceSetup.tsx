@@ -226,7 +226,9 @@ const VoiceSetup = () => {
   if (flowPhase === "local-record") {
     const lang = LOCAL_LANGUAGE_PHRASES[selectedLanguage];
     return (
-      <div className="flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+      <div className="relative flex flex-col min-h-screen bg-background text-foreground items-center justify-center px-6 gap-6">
+        {skipButton}
+        {skipDialog}
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-semibold">{lang.label} Calibration</h1>
           <p className="text-sm text-muted-foreground max-w-xs">
