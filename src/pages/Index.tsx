@@ -14,7 +14,17 @@ const suggestionChips = [
 
 const Index = () => {
   const [query, setQuery] = useState("");
+  const [voiceActive, setVoiceActive] = useState(false);
+  const [waveHeights, setWaveHeights] = useState<number[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!voiceActive) return;
+    const interval = setInterval(() => {
+      setWaveHeights(Array.from({ length: 30 }, () => Math.random() * 24 + 4));
+    }, 150);
+    return () => clearInterval(interval);
+  }, [voiceActive]);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
