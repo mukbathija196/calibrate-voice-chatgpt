@@ -38,7 +38,7 @@ const Auth = () => {
           .from("profiles")
           .select("voice_setup_complete")
           .eq("user_id", data.user.id)
-          .single();
+          .maybeSingle();
         if (profile?.voice_setup_complete) {
           navigate("/");
         } else {
