@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mic, Check, ArrowRight, ChevronDown } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -101,8 +102,19 @@ const VoiceSetup = () => {
     });
   };
 
+  const markVoiceSetupComplete = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase
+        .from("profiles")
+        .update({ voice_setup_complete: true })
+        .eq("user_id", user.id);
+    }
+  };
+
   const handleFinish = () => {
     setAdapting(true);
+    markVoiceSetupComplete();
     setTimeout(() => navigate("/"), 2500);
   };
 
@@ -120,7 +132,10 @@ const VoiceSetup = () => {
         </AlertDialogDescription>
         <AlertDialogFooter className="sm:justify-center">
           <AlertDialogAction
-            onClick={() => navigate("/")}
+            onClick={() => {
+              markVoiceSetupComplete();
+              navigate("/");
+            }}
             className="rounded-xl"
           >
             OK
