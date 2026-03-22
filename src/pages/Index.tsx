@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp, MoreVertical, Minus } from "lucide-react";
+import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp, MoreVertical, Minus, LogOut, MicVocal } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const suggestionChips = [
   { icon: Image, label: "Create image", color: "text-chip-green" },
@@ -17,6 +18,7 @@ const Index = () => {
   const [voiceActive, setVoiceActive] = useState(false);
   const [conversationMode, setConversationMode] = useState(false);
   const [waveHeights, setWaveHeights] = useState<number[]>([]);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,11 +32,18 @@ const Index = () => {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) navigate("/auth");
+      else setUserEmail(session.user.email ?? null);
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) navigate("/auth");
+      else setUserEmail(session.user.email ?? null);
     });
   }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/auth");
+  };
 
   if (conversationMode) {
     return (
