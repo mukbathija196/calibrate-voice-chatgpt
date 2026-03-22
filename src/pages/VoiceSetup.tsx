@@ -132,7 +132,10 @@ const VoiceSetup = () => {
         </AlertDialogDescription>
         <AlertDialogFooter className="sm:justify-center">
           <AlertDialogAction
-            onClick={() => navigate("/")}
+            onClick={() => {
+              markVoiceSetupComplete();
+              navigate("/");
+            }}
             className="rounded-xl"
           >
             OK
