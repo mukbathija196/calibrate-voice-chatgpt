@@ -102,8 +102,19 @@ const VoiceSetup = () => {
     });
   };
 
+  const markVoiceSetupComplete = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase
+        .from("profiles")
+        .update({ voice_setup_complete: true })
+        .eq("user_id", user.id);
+    }
+  };
+
   const handleFinish = () => {
     setAdapting(true);
+    markVoiceSetupComplete();
     setTimeout(() => navigate("/"), 2500);
   };
 
