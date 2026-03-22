@@ -28,12 +28,22 @@ const Auth = () => {
         setIsSignUp(false);
         setPassword("");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
-        navigate("/voice-setup");
+        // Check if voice setup is already done
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("voice_setup_complete")
+          .eq("user_id", data.user.id)
+          .single();
+        if (profile?.voice_setup_complete) {
+          navigate("/");
+        } else {
+          navigate("/voice-setup");
+        }
       }
     } catch (error: any) {
       toast.error(error.message);
