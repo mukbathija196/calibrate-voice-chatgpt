@@ -107,9 +107,34 @@ const Index = () => {
       {/* Top bar */}
       <header className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
-          <button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-            <Menu className="w-5 h-5 text-muted-foreground" />
-          </button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                <Menu className="w-5 h-5 text-muted-foreground" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-72 bg-card border-border flex flex-col p-0">
+              <div className="flex-1 pt-12 px-4 space-y-2">
+                <button
+                  onClick={() => navigate("/voice-setup")}
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-secondary transition-colors text-foreground"
+                >
+                  <MicVocal className="w-5 h-5 text-muted-foreground" />
+                  <span className="text-sm font-medium">Set up your voice</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-secondary transition-colors text-foreground"
+                >
+                  <LogOut className="w-5 h-5 text-muted-foreground" />
+                  <span className="text-sm font-medium">Log Out</span>
+                </button>
+              </div>
+              <div className="px-4 py-4 border-t border-border">
+                <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+              </div>
+            </SheetContent>
+          </Sheet>
           <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-secondary">
             <Sparkles className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-muted-foreground">Get Plus</span>
