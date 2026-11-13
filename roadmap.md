@@ -1,3 +1,3 @@
-- [ ] Replace the sign-in entry with an introduction and open-app path.
-- [ ] Keep chat and voice setup usable without an account.
+- [x] Replace the sign-in entry with an introduction and open-app path.
+- [x] Keep chat and voice setup usable without an account.
 - [ ] Verify the main flow and commit the changes.

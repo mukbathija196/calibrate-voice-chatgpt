@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp, MoreVertical, Minus, LogOut, MicVocal } from "lucide-react";
+import { Image, BarChart3, FileText, Lightbulb, Plus, Mic, AudioLines, Menu, Sparkles, UserPlus, ScanLine, X, ArrowUp, MoreVertical, Minus, Info, MicVocal } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { hasCompletedVoiceSetup } from "@/lib/voice-setup";
 
 const suggestionChips = [
   { icon: Image, label: "Create image", color: "text-chip-green" },
@@ -18,7 +18,7 @@ const Index = () => {
   const [voiceActive, setVoiceActive] = useState(false);
   const [conversationMode, setConversationMode] = useState(false);
   const [waveHeights, setWaveHeights] = useState<number[]>([]);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [voiceSetupComplete] = useState(hasCompletedVoiceSetup);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,22 +28,6 @@ const Index = () => {
     }, 150);
     return () => clearInterval(interval);
   }, [voiceActive]);
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) navigate("/auth");
-      else setUserEmail(session.user.email ?? null);
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) navigate("/auth");
-      else setUserEmail(session.user.email ?? null);
-    });
-  }, [navigate]);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/auth");
-  };
 
   if (conversationMode) {
     return (
@@ -123,15 +107,17 @@ const Index = () => {
                   <span className="text-sm font-medium">Set up your voice</span>
                 </button>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => navigate("/")}
                   className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-secondary transition-colors text-foreground"
                 >
-                  <LogOut className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-sm font-medium">Log Out</span>
+                  <Info className="w-5 h-5 text-muted-foreground" />
+                  <span className="text-sm font-medium">About Calibrate</span>
                 </button>
               </div>
               <div className="px-4 py-4 border-t border-border">
-                <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+                <p className="text-xs text-muted-foreground">
+                  {voiceSetupComplete ? "Voice setup complete on this device" : "Voice setup is available anytime"}
+                </p>
               </div>
             </SheetContent>
           </Sheet>
